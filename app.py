@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, Response, send_from_directory, send_file
 import json, os
 import textwrap
+from datetime import datetime
 from PIL import Image, ImageDraw, ImageFont
 import logging
 
@@ -66,7 +67,17 @@ def get_latest_update_time(jsonl_file="/data/新闻汇总.jsonl"):
                 last_line = line
             if last_line:
                 last_news = json.loads(last_line.strip())  # 解析 JSON
-                return last_news.get("publish_time", "未知时间")
+                publish_time = last_news.get("publish_time", "未知时间")
+
+                for fmt in ("%Y-%m-%d %H:%M", "%Y-%m-%d"):  
+                    try:
+                        dt = datetime.strptime(publish_time, fmt)
+                        return dt.strftime("%m-%d" + (" %H:%M" if "%H" in fmt else ""))  # 自动匹配格式
+                    except ValueError:
+                        continue  # 继续尝试下一个格式
+                
+                return "未知时间"
+
     except FileNotFoundError:
         return "暂无更新"
     except json.JSONDecodeError:
@@ -288,7 +299,35 @@ def index(DATA_DIR="/data"):
             .toggle-button {{
                 margin-left: auto; /* 确保 "展开/收起" 按钮靠最右 */
             }}
-  
+            @media (prefers-color-scheme: dark) {{
+                body {{
+                    background-color: #121212;  /* 深色背景 */
+                    color: #ffffff;  /* 白色文字 */
+                }}
+                
+                h1, h2 {{
+                    color: #ffffff; /* 让标题在夜间模式下更亮 */
+                }}
+                .news-section {{
+                    background-color: #1e1e1e; /* 深色模式下的卡片背景 */
+                    color: #ffffff;
+                    border: 1px solid #333;
+                }}
+
+                .toggle-button {{
+                    background-color: #333;
+                    color: #ffffff;
+                }}
+
+                .update-time {{
+                    color: #bbbbbb; /* 变成浅灰色，避免太亮 */
+                }}
+
+                a {{
+                    color: #4bb4ff; /* 蓝色链接 */
+                }}
+
+
         </style>
         <script>
             function toggleNews(id) {{
@@ -354,7 +393,7 @@ def index(DATA_DIR="/data"):
         title = os.path.splitext(file_name)[0]
 
         # ✅ 按 publish_time 倒序
-        news_list = sorted(news_list, key=lambda x: x.get("publish_time", ""), reverse=True)
+        # news_list = sorted(news_list, key=lambda x: x.get("publish_time", ""), reverse=True)
 
         # ✅ 获取该文件的最新更新时间
         file_update_time = get_latest_update_time(file_path)
@@ -377,8 +416,14 @@ def index(DATA_DIR="/data"):
         """
 
         # 只显示前 6 条新闻
-        for i, news in enumerate(news_list[:6]):
-            article_url = f"/article?file={file_name}&index={len(news_list)-i-1}"
+        # for i, news in  zip(range(len(news_list) - 1, len(news_list) - 7, -1), reversed(news_list[-6:])): #  enumerate(news_list[:6]):
+        # for idx, news in enumerate(reversed(news_list[-6:])):  
+        #     i = len(news_list) - 1 - idx  # 让索引递减    
+        # for i, news in zip(range(len(news_list) - 1, len(news_list) - 7, -1), reversed(news_list[-6:])):
+        n = len(news_list)
+        for i in range(n - 1, max(n - 7, -1),-1):
+            news = news_list[i]
+            article_url = f"/article?file={file_name}&index={i}"
             news_title = news.get("title", "无标题")
             news_publisher = news.get("publisher", "未知来源")
             news_time = news.get("publish_time", "未知时间")
@@ -429,19 +474,60 @@ def view_article(DATA_DIR="/data"):
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{title}</title>
         <style>
+            /* 默认浅色模式 */
             body {{
-                margin-top: 50px;
+                background-color: #ffffff;
+                color: #000000;
+                font-family: "PingFang SC", "Noto Sans SC", sans-serif;
+                line-height: 1.8;
+                margin: 50px;
+                padding: 20px;
+            }}
+
+            h1 {{
+                color: #222;
+            }}
+
+            .article-content {{
+                background-color: #f8f9fa;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            }}
+
+            /* 适配“夜间模式” */
+            @media (prefers-color-scheme: dark) {{
+                body {{
+                    background-color: #121212;
+                    color: #ffffff;
+                }}
+
+                h1 {{
+                    color: #ffffff; /* 标题变亮 */
+                }}
+
+                .article-content {{
+                    background-color: #1e1e1e; /* 深色模式下的文章背景 */
+                    border: 1px solid #333;
+                }}
+
+                a {{
+                    color: #4bb4ff; /* 链接变蓝 */
+                }}
             }}
         </style>
     </head>
     <body>
         {HOME_BUTTON}
-        <h1>{title}</h1>
-        <p><b>来源：</b>{news.get("publisher", "未知来源")} | <b>发布时间：</b>{news.get("publish_time", "未知时间")}</p>
-        <p>{content_text}</p>
+        <div class="article-content">
+            <h1>{title}</h1>
+            <p><b>来源：</b>{news.get("publisher", "未知来源")} | <b>发布时间：</b>{news.get("publish_time", "未知时间")}</p>
+            <p>{content_text}</p>
+        </div>
     </body>
     </html>
     """
+
     return Response(html_response, mimetype="text/html")
 
 
@@ -470,8 +556,42 @@ def view_file(DATA_DIR="/data"):
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{title} - 全部新闻</title>
         <style>
+            /* 默认浅色模式 */
             body {{
+                background-color: #ffffff;
+                color: #000000;
+                font-family: "PingFang SC", "Noto Sans SC", sans-serif;
+                line-height: 1.8;
                 margin-top: 50px;
+            }}
+
+            h1 {{
+                color: #222;
+            }}
+
+            .news-item {{
+                padding: 10px 0;
+                border-bottom: 1px solid #ddd;
+            }}
+
+            /* 适配“夜间模式” */
+            @media (prefers-color-scheme: dark) {{
+                body {{
+                    background-color: #121212;
+                    color: #ffffff;
+                }}
+
+                h1 {{
+                    color: #ffffff; /* 标题变亮 */
+                }}
+
+                .news-item {{
+                    border-bottom: 1px solid #444;
+                }}
+
+                a {{
+                    color: #4bb4ff; /* 链接变蓝 */
+                }}
             }}
         </style>
     </head>
@@ -480,6 +600,16 @@ def view_file(DATA_DIR="/data"):
         <h1>📅 {title} - 全部新闻</h1>
         <ul>
     """
+
+    for news in news_list:
+        html_response += f"""
+        <li class="news-item">
+            <h3>{news.get("title", "无标题")}</h3>
+            <p><b>来源：</b>{news.get("publisher", "未知来源")} | <b>发布时间：</b>{news.get("publish_time", "未知时间")}</p>
+            <p>{news.get("content", "无内容")}</p>
+        </li>
+        """
+
 
     for news in news_list:
         html_response += f"""
