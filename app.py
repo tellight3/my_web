@@ -193,10 +193,13 @@ def index(DATA_DIR="/data"):
                 padding: 20px;
                 margin-bottom: 20px;
                 transition: transform 0.3s;
+                cursor: pointer; /* 让鼠标变成手型，表示可点击 */
             }}
             .news-section:hover {{
                 transform: translateY(-5px);
             }}
+
+        
 
             /* ======= 列表项样式 ======= */
             .news-item {{
@@ -326,19 +329,28 @@ def index(DATA_DIR="/data"):
                 a {{
                     color: #4bb4ff; /* 蓝色链接 */
                 }}
-
+                .news-header span {{
+                    font-size: 18px; /* 确保符号可见 */
+                    margin-right: 5px; /* 符号和标题有间隔 */
+                }}
 
         </style>
         <script>
             function toggleNews(id) {{
                 var content = document.getElementById(id);
-                var button = document.getElementById(id + '-btn');
-                if (content.style.display === "none") {{
-                    content.style.display = "block";
-                    button.innerText = "🔽 收起";
+                var icon = document.getElementById(id + "-icon");
+
+                if (!content || !icon) {{
+                    console.error("Element not found: " + id);
+                    return;
+                }}
+
+                if (content.style.display === "none" || content.style.display === "") {{
+                    content.style.display = "block"; 
+                    icon.innerHTML = "🔽";  // 展开时改成向下箭头
                 }} else {{
-                    content.style.display = "none";
-                    button.innerText = "▶ 展开";
+                    content.style.display = "none"; 
+                    icon.innerHTML = "▶";  // 收起时改回向右箭头
                 }}
             }}
 
@@ -392,9 +404,6 @@ def index(DATA_DIR="/data"):
         news_list = read_jsonl(file_path)
         title = os.path.splitext(file_name)[0]
 
-        # ✅ 按 publish_time 倒序
-        # news_list = sorted(news_list, key=lambda x: x.get("publish_time", ""), reverse=True)
-
         # ✅ 获取该文件的最新更新时间
         file_update_time = get_latest_update_time(file_path)
 
@@ -403,23 +412,18 @@ def index(DATA_DIR="/data"):
 
         section_id = f"news-{index}"
         html_response += f"""
-        <div class="news-section">
-            <div class="news-header">
-                <div class="title-area">
-                    <h2>📅 {title}{more_link}</h2>
-                    <span class="update-time"> {file_update_time}更新 </span>
+            <div class="news-section" onclick="toggleNews('{section_id}')">
+                <div class="news-header">
+                    <div class="title-area">
+                        <h2><span id="{section_id}-icon">▶</span> {title}{more_link}</h2>
+                        <span class="update-time">{file_update_time} 更新</span>
+                    </div>
                 </div>
-                <button id="{section_id}-btn" class="toggle-button" onclick="toggleNews('{section_id}')">🔽 收起</button>
-            </div>
-            <div id="{section_id}" class="news-content">
-                <ul>
-        """
+                <div id="{section_id}" class="news-content" style="display: none;">
+                    <ul>
+"""
 
         # 只显示前 6 条新闻
-        # for i, news in  zip(range(len(news_list) - 1, len(news_list) - 7, -1), reversed(news_list[-6:])): #  enumerate(news_list[:6]):
-        # for idx, news in enumerate(reversed(news_list[-6:])):  
-        #     i = len(news_list) - 1 - idx  # 让索引递减    
-        # for i, news in zip(range(len(news_list) - 1, len(news_list) - 7, -1), reversed(news_list[-6:])):
         n = len(news_list)
         for i in range(n - 1, max(n - 7, -1),-1):
             news = news_list[i]
