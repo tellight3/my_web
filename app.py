@@ -57,6 +57,22 @@ def get_stats():
     """ 返回当前访问量统计 """
     return Response(f"<h1>📊 访问量统计</h1><p>总访问次数: {visit_count}</p>", mimetype="text/html")
 
+def get_latest_update_time(jsonl_file="/data/新闻汇总.jsonl"):
+    """ 读取 JSONL 文件的最后一行，获取最新的 publish_time """
+    try:
+        with open(jsonl_file, "r", encoding="utf-8") as file:
+            last_line = None
+            for line in file:  # 遍历直到最后一行
+                last_line = line
+            if last_line:
+                last_news = json.loads(last_line.strip())  # 解析 JSON
+                return last_news.get("publish_time", "未知时间")
+    except FileNotFoundError:
+        return "暂无更新"
+    except json.JSONDecodeError:
+        return "数据错误"
+
+    return "暂无更新"
 
 IMAGE_DIR = "/app/news_images"  # 存放所有动态生成的新闻图片
 
@@ -132,6 +148,7 @@ def index(DATA_DIR="/data"):
     读取 /data 目录下所有 JSONL 文件，按日期倒序排列，
     ‘新闻汇总.jsonl’ 放最前，文件内按 publish_time 倒序
     """
+    latest_update = get_latest_update_time() 
     html_response = f"""
     <!DOCTYPE html>
     <html lang="zh">
@@ -248,6 +265,30 @@ def index(DATA_DIR="/data"):
                 background-color: #3a47c7;
                 transform: scale(1.05);  /* 鼠标悬停时轻微放大 */
             }}
+            .news-header {{
+                display: flex;
+                align-items: center;
+                width: 100%;
+                justify-content: space-between; /* 让标题区域和按钮分别靠左、靠右 */
+            }}
+
+            .title-area {{
+                display: flex;
+                align-items: center;
+                gap: 10px; /* 控制 "[More]" 和 "最近更新时间" 之间的间距 */
+            }}
+
+            .update-time {{
+                font-size: 12px;
+                color: #888;
+                white-space: nowrap; /* 防止换行 */
+                margin-top: 10px;
+            }}
+
+            .toggle-button {{
+                margin-left: auto; /* 确保 "展开/收起" 按钮靠最右 */
+            }}
+  
         </style>
         <script>
             function toggleNews(id) {{
@@ -315,16 +356,22 @@ def index(DATA_DIR="/data"):
         # ✅ 按 publish_time 倒序
         news_list = sorted(news_list, key=lambda x: x.get("publish_time", ""), reverse=True)
 
+        # ✅ 获取该文件的最新更新时间
+        file_update_time = get_latest_update_time(file_path)
+
         # ✅ 如果超过 6 条，添加 [More] 按钮
         more_link = f' <a href="/view?file={file_name}" style="font-size:14px;">[More]</a>' if len(news_list) > 6 else ""
 
         section_id = f"news-{index}"
         html_response += f"""
         <div class="news-section">
-            <h2>
-                📅 {title}{more_link}
+            <div class="news-header">
+                <div class="title-area">
+                    <h2>📅 {title}{more_link}</h2>
+                    <span class="update-time"> {file_update_time}更新 </span>
+                </div>
                 <button id="{section_id}-btn" class="toggle-button" onclick="toggleNews('{section_id}')">🔽 收起</button>
-            </h2>
+            </div>
             <div id="{section_id}" class="news-content">
                 <ul>
         """
