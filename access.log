@@ -1,0 +1,182 @@
+2025-03-24 09:46:54 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.19.0.2:5000
+2025-03-24 09:46:54 - [33mPress CTRL+C to quit[0m
+2025-03-24 09:46:54 -  * Restarting with stat
+2025-03-24 09:46:55 -  * Debugger is active!
+2025-03-24 09:46:55 -  * Debugger PIN: 107-250-267
+2025-03-24 09:48:35 - 访问 / 来自 172.19.0.3 - Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1
+2025-03-24 09:48:35 - 172.19.0.3 - - [24/Mar/2025 09:48:35] "GET / HTTP/1.1" 200 -
+2025-03-24 09:49:00 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.19.0.2:5000
+2025-03-24 09:49:00 - [33mPress CTRL+C to quit[0m
+2025-03-24 09:49:00 -  * Restarting with stat
+2025-03-24 09:49:01 -  * Debugger is active!
+2025-03-24 09:49:01 -  * Debugger PIN: 107-250-267
+2025-03-24 09:49:05 - 访问 / 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 09:49:05 - 172.19.0.3 - - [24/Mar/2025 09:49:05] "GET / HTTP/1.1" 200 -
+2025-03-24 09:49:52 - 访问 /stat 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 09:49:52 - 172.19.0.3 - - [24/Mar/2025 09:49:52] "[33mGET /stat HTTP/1.1[0m" 404 -
+2025-03-24 09:50:35 - 访问 /stats 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 09:50:35 - 172.19.0.3 - - [24/Mar/2025 09:50:35] "GET /stats HTTP/1.1" 200 -
+2025-03-24 09:54:21 - 访问 / 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 09:54:21 - 172.19.0.3 - - [24/Mar/2025 09:54:21] "GET / HTTP/1.1" 200 -
+2025-03-24 09:54:24 - 访问 /stats 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 09:54:24 - 172.19.0.3 - - [24/Mar/2025 09:54:24] "GET /stats HTTP/1.1" 200 -
+2025-03-24 09:55:38 -  * Detected change in '/app/app.py', reloading
+2025-03-24 09:55:38 -  * Restarting with stat
+2025-03-24 09:55:39 -  * Debugger is active!
+2025-03-24 09:55:39 -  * Debugger PIN: 107-250-267
+2025-03-24 09:55:48 - 访问 /stats_count" 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 09:55:48 - 172.19.0.3 - - [24/Mar/2025 09:55:48] "[33mGET /stats_count" HTTP/1.1[0m" 404 -
+2025-03-24 09:55:51 - 访问 /stats_count 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 09:55:51 - 172.19.0.3 - - [24/Mar/2025 09:55:51] "GET /stats_count HTTP/1.1" 200 -
+2025-03-24 09:56:24 - 访问 / 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 09:56:24 - 172.19.0.3 - - [24/Mar/2025 09:56:24] "GET / HTTP/1.1" 200 -
+2025-03-24 10:07:23 - 访问 /view 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 10:07:23 - 172.19.0.3 - - [24/Mar/2025 10:07:23] "GET /view?file=Yahoo%20Finance.jsonl HTTP/1.1" 200 -
+2025-03-24 10:07:29 - 访问 / 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 10:07:29 - 172.19.0.3 - - [24/Mar/2025 10:07:29] "GET / HTTP/1.1" 200 -
+2025-03-24 10:10:36 -  * Detected change in '/app/app.py', reloading
+2025-03-24 10:10:36 -  * Restarting with stat
+2025-03-24 10:10:37 -  * Debugger is active!
+2025-03-24 10:10:37 -  * Debugger PIN: 107-250-267
+2025-03-24 10:10:42 - 访问 / 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 10:10:42 - 172.19.0.3 - - [24/Mar/2025 10:10:42] "GET / HTTP/1.1" 200 -
+2025-03-24 10:10:59 - 访问 /article 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 10:10:59 - 172.19.0.3 - - [24/Mar/2025 10:10:59] "GET /article?file=新闻汇总.jsonl&index=0 HTTP/1.1" 200 -
+2025-03-24 10:11:01 - 访问 /article 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 10:11:01 - 172.19.0.3 - - [24/Mar/2025 10:11:01] "GET /article?file=新闻汇总.jsonl&index=1 HTTP/1.1" 200 -
+2025-03-24 10:11:14 - 访问 /view 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 10:11:14 - 172.19.0.3 - - [24/Mar/2025 10:11:14] "GET /view?file=Yahoo%20Finance.jsonl HTTP/1.1" 200 -
+2025-03-24 10:12:05 - 访问 / 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 10:12:05 - 172.19.0.3 - - [24/Mar/2025 10:12:05] "GET / HTTP/1.1" 200 -
+2025-03-24 10:12:15 - 访问 /stats_count 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 10:12:15 - 172.19.0.3 - - [24/Mar/2025 10:12:15] "GET /stats_count HTTP/1.1" 200 -
+2025-03-24 10:13:03 - 访问 / 来自 172.19.0.3 - Mozilla/5.0 (iPhone; CPU iPhone OS 18_3_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/134.0.6998.99 Mobile/15E148 Safari/604.1
+2025-03-24 10:13:03 - 172.19.0.3 - - [24/Mar/2025 10:13:03] "GET / HTTP/1.1" 200 -
+2025-03-24 10:13:04 - 访问 /favicon.ico 来自 172.19.0.3 - Mozilla/5.0 (iPhone; CPU iPhone OS 18_3_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/134.0.6998.99 Mobile/15E148 Safari/604.1
+2025-03-24 10:13:04 - 172.19.0.3 - - [24/Mar/2025 10:13:04] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-03-24 10:23:27 -  * Detected change in '/app/app.py', reloading
+2025-03-24 10:23:27 -  * Restarting with stat
+2025-03-24 10:23:28 -  * Debugger is active!
+2025-03-24 10:23:28 -  * Debugger PIN: 107-250-267
+2025-03-24 10:23:32 - 访问 / 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 10:23:32 - 172.19.0.3 - - [24/Mar/2025 10:23:32] "GET / HTTP/1.1" 200 -
+2025-03-24 10:24:12 - 访问 / 来自 172.19.0.3 - Mozilla/5.0 (iPhone; CPU iPhone OS 18_3_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/134.0.6998.99 Mobile/15E148 Safari/604.1
+2025-03-24 10:24:12 - 172.19.0.3 - - [24/Mar/2025 10:24:12] "GET / HTTP/1.1" 200 -
+2025-03-24 10:25:26 - 访问 /article 来自 172.19.0.3 - Mozilla/5.0 (iPhone; CPU iPhone OS 18_3_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/134.0.6998.99 Mobile/15E148 Safari/604.1
+2025-03-24 10:25:26 - 172.19.0.3 - - [24/Mar/2025 10:25:26] "GET /article?file=World%20Knowledge%20Forum.jsonl&index=0 HTTP/1.1" 200 -
+2025-03-24 10:53:12 -  * Detected change in '/app/app.py', reloading
+2025-03-24 10:53:12 -  * Restarting with stat
+2025-03-24 10:53:12 -  * Debugger is active!
+2025-03-24 10:53:12 -  * Debugger PIN: 107-250-267
+2025-03-24 10:53:16 - 访问 / 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 10:53:16 - 172.19.0.3 - - [24/Mar/2025 10:53:16] "GET / HTTP/1.1" 200 -
+2025-03-24 10:53:22 - 访问 / 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 10:53:22 - 172.19.0.3 - - [24/Mar/2025 10:53:22] "GET / HTTP/1.1" 200 -
+2025-03-24 10:53:23 - 访问 / 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 10:53:23 - 172.19.0.3 - - [24/Mar/2025 10:53:23] "GET / HTTP/1.1" 200 -
+2025-03-24 10:55:11 -  * Detected change in '/app/app.py', reloading
+2025-03-24 10:55:11 -  * Restarting with stat
+2025-03-24 10:55:11 -  * Debugger is active!
+2025-03-24 10:55:11 -  * Debugger PIN: 107-250-267
+2025-03-24 10:55:17 - 访问 / 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 10:55:17 - 172.19.0.3 - - [24/Mar/2025 10:55:17] "GET / HTTP/1.1" 200 -
+2025-03-24 10:55:20 - 访问 / 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 10:55:20 - 172.19.0.3 - - [24/Mar/2025 10:55:20] "GET / HTTP/1.1" 200 -
+2025-03-24 10:55:21 - 访问 / 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 10:55:21 - 172.19.0.3 - - [24/Mar/2025 10:55:21] "GET / HTTP/1.1" 200 -
+2025-03-24 10:55:22 - 访问 / 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 10:55:22 - 172.19.0.3 - - [24/Mar/2025 10:55:22] "GET / HTTP/1.1" 200 -
+2025-03-24 10:55:42 -  * Detected change in '/app/app.py', reloading
+2025-03-24 10:55:42 -  * Restarting with stat
+2025-03-24 10:55:42 -  * Debugger is active!
+2025-03-24 10:55:42 -  * Debugger PIN: 107-250-267
+2025-03-24 10:55:45 - 访问 / 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 10:55:45 - 172.19.0.3 - - [24/Mar/2025 10:55:45] "GET / HTTP/1.1" 200 -
+2025-03-24 10:55:52 - 访问 /article 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 10:55:52 - 172.19.0.3 - - [24/Mar/2025 10:55:52] "GET /article?file=新闻汇总.jsonl&index=0 HTTP/1.1" 200 -
+2025-03-24 11:09:09 -  * Detected change in '/app/app.py', reloading
+2025-03-24 11:09:09 -  * Restarting with stat
+2025-03-24 11:09:10 -  * Debugger is active!
+2025-03-24 11:09:10 -  * Debugger PIN: 107-250-267
+2025-03-24 11:09:15 - 访问 / 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 11:09:15 - 172.19.0.3 - - [24/Mar/2025 11:09:15] "GET / HTTP/1.1" 200 -
+2025-03-24 11:09:17 - 访问 / 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 11:09:17 - 172.19.0.3 - - [24/Mar/2025 11:09:17] "GET / HTTP/1.1" 200 -
+2025-03-24 11:09:19 - 访问 /article 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 11:09:19 - 172.19.0.3 - - [24/Mar/2025 11:09:19] "GET /article?file=新闻汇总.jsonl&index=0 HTTP/1.1" 200 -
+2025-03-24 11:09:21 - 访问 / 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 11:09:21 - 172.19.0.3 - - [24/Mar/2025 11:09:21] "GET / HTTP/1.1" 200 -
+2025-03-24 11:09:29 - 访问 /article 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 11:09:29 - 172.19.0.3 - - [24/Mar/2025 11:09:29] "GET /article?file=Yahoo%20Finance.jsonl&index=0 HTTP/1.1" 200 -
+2025-03-24 11:09:31 - 访问 / 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 11:09:31 - 172.19.0.3 - - [24/Mar/2025 11:09:31] "GET / HTTP/1.1" 200 -
+2025-03-24 11:10:40 - 访问 /article 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 11:10:40 - 172.19.0.3 - - [24/Mar/2025 11:10:40] "GET /article?file=新闻汇总.jsonl&index=0 HTTP/1.1" 200 -
+2025-03-24 11:10:44 - 访问 /article 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 11:10:44 - 172.19.0.3 - - [24/Mar/2025 11:10:44] "GET /article?file=新闻汇总.jsonl&index=1 HTTP/1.1" 200 -
+2025-03-24 11:10:47 - 访问 /article 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 11:10:47 - 172.19.0.3 - - [24/Mar/2025 11:10:47] "GET /article?file=新闻汇总.jsonl&index=0 HTTP/1.1" 200 -
+2025-03-24 11:10:55 - 访问 /article 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 11:10:55 - 172.19.0.3 - - [24/Mar/2025 11:10:55] "GET /article?file=新闻汇总.jsonl&index=0 HTTP/1.1" 200 -
+2025-03-24 11:11:00 - 访问 /article 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 11:11:00 - 172.19.0.3 - - [24/Mar/2025 11:11:00] "GET /article?file=Yahoo%20Finance.jsonl&index=0 HTTP/1.1" 200 -
+2025-03-24 11:11:09 - 访问 /article 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 11:11:09 - 172.19.0.3 - - [24/Mar/2025 11:11:09] "GET /article?file=Yahoo%20Finance.jsonl&index=5 HTTP/1.1" 200 -
+2025-03-24 11:11:12 - 访问 /article 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 11:11:12 - 172.19.0.3 - - [24/Mar/2025 11:11:12] "GET /article?file=Yahoo%20Finance.jsonl&index=5 HTTP/1.1" 200 -
+2025-03-24 11:11:22 - 访问 /article 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 11:11:22 - 172.19.0.3 - - [24/Mar/2025 11:11:22] "GET /article?file=Yahoo%20Finance.jsonl&index=2 HTTP/1.1" 200 -
+2025-03-24 11:11:38 - 访问 /article 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 11:11:38 - 172.19.0.3 - - [24/Mar/2025 11:11:38] "GET /article?file=Yahoo%20Finance.jsonl&index=0 HTTP/1.1" 200 -
+2025-03-24 11:11:42 - 访问 /article 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 11:11:42 - 172.19.0.3 - - [24/Mar/2025 11:11:42] "GET /article?file=Yahoo%20Finance.jsonl&index=0 HTTP/1.1" 200 -
+2025-03-24 11:11:53 - 访问 /article 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 11:11:53 - 172.19.0.3 - - [24/Mar/2025 11:11:53] "GET /article?file=Yahoo%20Finance.jsonl&index=0 HTTP/1.1" 200 -
+2025-03-24 11:12:04 - 访问 /article 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 11:12:04 - 172.19.0.3 - - [24/Mar/2025 11:12:04] "GET /article?file=Yahoo%20Finance.jsonl&index=1 HTTP/1.1" 200 -
+2025-03-24 11:12:08 - 访问 /article 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 11:12:08 - 172.19.0.3 - - [24/Mar/2025 11:12:08] "GET /article?file=Yahoo%20Finance.jsonl&index=1 HTTP/1.1" 200 -
+2025-03-24 11:12:26 - 访问 /article 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 11:12:26 - 172.19.0.3 - - [24/Mar/2025 11:12:26] "GET /article?file=Last%20Days.jsonl&index=0 HTTP/1.1" 200 -
+2025-03-24 11:12:29 - 访问 /article 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 11:12:29 - 172.19.0.3 - - [24/Mar/2025 11:12:29] "GET /article?file=Last%20Days.jsonl&index=0 HTTP/1.1" 200 -
+2025-03-24 11:12:35 - 访问 /article 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 11:12:35 - 172.19.0.3 - - [24/Mar/2025 11:12:35] "GET /article?file=BBC.jsonl&index=0 HTTP/1.1" 200 -
+2025-03-24 11:13:03 - 访问 /article 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 11:13:03 - 172.19.0.3 - - [24/Mar/2025 11:13:03] "GET /article?file=Yahoo%20Finance.jsonl&index=0 HTTP/1.1" 200 -
+2025-03-24 11:13:06 - 访问 /view 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 11:13:06 - 172.19.0.3 - - [24/Mar/2025 11:13:06] "GET /view?file=Yahoo%20Finance.jsonl HTTP/1.1" 200 -
+2025-03-24 11:13:11 - 访问 /article 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 11:13:11 - 172.19.0.3 - - [24/Mar/2025 11:13:11] "GET /article?file=Yahoo%20Finance.jsonl&index=0 HTTP/1.1" 200 -
+2025-03-24 11:13:32 - 访问 /article 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 11:13:32 - 172.19.0.3 - - [24/Mar/2025 11:13:32] "GET /article?file=Yahoo%20Finance.jsonl&index=0 HTTP/1.1" 200 -
+2025-03-24 11:15:44 - 访问 /article 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 11:15:44 - 172.19.0.3 - - [24/Mar/2025 11:15:44] "GET /article?file=Yahoo%20Finance.jsonl&index=0 HTTP/1.1" 200 -
+2025-03-24 11:21:45 -  * Detected change in '/app/app.py', reloading
+2025-03-24 11:21:45 -  * Restarting with stat
+2025-03-24 11:21:46 -  * Debugger is active!
+2025-03-24 11:21:46 -  * Debugger PIN: 107-250-267
+2025-03-24 11:21:50 - 访问 / 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 11:21:50 - 172.19.0.3 - - [24/Mar/2025 11:21:50] "GET / HTTP/1.1" 200 -
+2025-03-24 11:21:53 - 访问 /article 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 11:21:53 - 172.19.0.3 - - [24/Mar/2025 11:21:53] "GET /article?file=Yahoo%20Finance.jsonl&index=7 HTTP/1.1" 200 -
+2025-03-24 11:21:58 - 访问 /article 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 11:21:58 - 172.19.0.3 - - [24/Mar/2025 11:21:58] "GET /article?file=Yahoo%20Finance.jsonl&index=8 HTTP/1.1" 200 -
+2025-03-24 11:22:04 - 访问 /article 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 11:22:04 - 172.19.0.3 - - [24/Mar/2025 11:22:04] "GET /article?file=Yahoo%20Finance.jsonl&index=6 HTTP/1.1" 200 -
+2025-03-24 11:22:08 - 访问 /article 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 11:22:08 - 172.19.0.3 - - [24/Mar/2025 11:22:08] "GET /article?file=Yahoo%20Finance.jsonl&index=6 HTTP/1.1" 200 -
+2025-03-24 11:22:13 - 访问 /article 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 11:22:13 - 172.19.0.3 - - [24/Mar/2025 11:22:13] "GET /article?file=Yahoo%20Finance.jsonl&index=5 HTTP/1.1" 200 -
+2025-03-24 11:22:16 - 访问 /article 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 11:22:16 - 172.19.0.3 - - [24/Mar/2025 11:22:16] "GET /article?file=Yahoo%20Finance.jsonl&index=4 HTTP/1.1" 200 -
+2025-03-24 11:22:23 - 访问 /article 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 11:22:23 - 172.19.0.3 - - [24/Mar/2025 11:22:23] "GET /article?file=Yahoo%20Finance.jsonl&index=3 HTTP/1.1" 200 -
+2025-03-24 11:22:28 - 访问 /article 来自 172.19.0.3 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+2025-03-24 11:22:28 - 172.19.0.3 - - [24/Mar/2025 11:22:28] "GET /article?file=World%20Knowledge%20Forum.jsonl&index=0 HTTP/1.1" 200 -

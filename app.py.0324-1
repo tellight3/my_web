@@ -1,0 +1,378 @@
+from flask import Flask, request, jsonify , Response, send_from_directory, send_file
+import json, os
+import textwrap
+from PIL import Image, ImageDraw, ImageFont
+import logging
+
+app = Flask(__name__)
+
+
+
+# ✅ 访问计数文件路径
+VISIT_COUNT_FILE = "/app/visit_count.txt"
+
+# ✅ 读取历史访问次数
+def load_visit_count():
+    if os.path.exists(VISIT_COUNT_FILE):
+        try:
+            with open(VISIT_COUNT_FILE, "r") as f:
+                return int(f.read().strip())
+        except ValueError:
+            return 0
+    return 0
+
+# ✅ 访问计数，启动时加载
+visit_count = load_visit_count()
+
+# ✅ 设置日志记录
+log_file = "/app/access.log"
+logging.basicConfig(
+    filename=log_file,
+    level=logging.INFO,
+    format="%(asctime)s - %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S"
+)
+
+@app.before_request
+def track_visits():
+    """ 统计访问量并记录日志 """
+    global visit_count
+    visit_count += 1
+
+    # ✅ 每次访问后，更新 `visit_count.txt`
+    with open(VISIT_COUNT_FILE, "w") as f:
+        f.write(str(visit_count))
+
+    visitor_ip = request.remote_addr  # 访问者 IP
+    user_agent = request.headers.get("User-Agent", "Unknown")  # 浏览器信息
+    logging.info(f"访问 {request.path} 来自 {visitor_ip} - {user_agent}")
+
+@app.route("/stats")
+def get_stats():
+    """ 返回当前访问量统计 """
+    return Response(f"<h1>📊 访问量统计</h1><p>总访问次数: {visit_count}</p>", mimetype="text/html")
+
+
+# JSONL_FILE = "新闻汇总.jsonl"
+
+IMAGE_DIR = "/app/news_images"  # 存放所有动态生成的新闻图片
+
+# 确保图片目录存在
+os.makedirs(IMAGE_DIR, exist_ok=True)
+
+
+def read_jsonl(jsonl_file='/data/新闻汇总.jsonl'):
+    """ 逐行读取 JSONL，减少内存占用 """
+    try:
+        with open(jsonl_file, "r", encoding="utf-8") as file:
+            return [json.loads(line) for line in file]
+    except FileNotFoundError:
+        return []
+
+
+def get_font_path():
+    """ 自动查找可用的中文字体 """
+    possible_paths = [
+        "/usr/share/fonts/opentype/noto/NotoSansCJKsc-Regular.otf"
+    ]
+    
+    for path in possible_paths:
+        if os.path.exists(path):
+            print(f"✅ 找到字体: {path}", flush=True)  # 强制刷新日志
+            return path
+
+    print("⚠️ 没有找到可用的中文字体", flush=True)
+    return None  # 没找到字体
+
+
+def generate_news_image(text, date):
+    """ 生成带有新闻标题的缩略图，支持中文 """
+    image_path = f"/app/news_images/news_{date}.jpeg"
+
+    if os.path.exists(image_path):
+        return image_path  # 如果已生成，则直接返回
+
+    # ✅ 设置图片大小
+    img_width, img_height = 600, 315
+    img = Image.new('RGB', (img_width, img_height), color=(255, 255, 255))
+    draw = ImageDraw.Draw(img)
+
+    # ✅ 获取可用的中文字体
+    font_path = get_font_path()
+    font_size = 28  # 调大字体，提升可读性
+    if font_path:
+        try:
+            font = ImageFont.truetype(font_path, font_size, encoding="unic")
+        except OSError:
+            print("⚠️ 字体加载失败，使用默认字体")
+            font = ImageFont.load_default()
+    else:
+        print("⚠️ 未找到可用字体，使用默认字体")
+        font = ImageFont.load_default()
+
+    # ✅ 处理文本换行，增加行距
+    text = text.replace("<b>", "【").replace("</b>", "】")  # 替换 HTML 粗体
+    max_chars = 18  # 每行最多 18 个字符
+    wrapped_text = "\n".join(textwrap.wrap(text, width=max_chars))  # 自动换行
+
+    # ✅ 设置文本位置
+    margin_x, margin_y = 20, 20  # 左上角的偏移量
+    line_spacing = 10  # 增加行间距，避免重叠
+
+    # ✅ 绘制文本
+    draw.multiline_text((margin_x, margin_y), wrapped_text, font=font, fill=(0, 0, 0), spacing=line_spacing)
+
+    # ✅ 保存图片
+    img.save(image_path)
+    print(f"✅ 生成图片: {image_path}")
+    return image_path
+
+
+
+
+@app.route("/")
+def index(DATA_DIR = "/data"):
+    """ 读取 /data 目录下所有 JSONL 文件，按日期倒序排列，‘新闻汇总.jsonl’ 放最前，文件内按 publish_time 倒序 """
+    html_response = """
+    <!DOCTYPE html>
+    <html lang="zh">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>新闻汇总</title>
+        <style>
+            body { font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; }
+            h1 { text-align: center; }
+            .news-section { margin-bottom: 40px; padding: 10px; border-bottom: 2px solid #ddd; }
+            .news-item { margin-bottom: 20px; }
+            .news-title { font-size: 18px; font-weight: bold; text-decoration: none; color: blue; }
+            .news-meta { color: #666; font-size: 14px; }
+            .toggle-button { cursor: pointer; font-size: 14px; color: blue; border: none; background: none; margin-left: 10px; }
+            .news-content { display: block; }
+        </style>
+        <script>
+            function toggleNews(id) {
+                var content = document.getElementById(id);
+                var button = document.getElementById(id + '-btn');
+                if (content.style.display === "none") {
+                    content.style.display = "block";
+                    button.innerText = "🔽 收起";
+                } else {
+                    content.style.display = "none";
+                    button.innerText = "▶ 展开";
+                }
+            }
+
+            function toggleAll() {
+                var allContents = document.querySelectorAll(".news-content");
+                var allButtons = document.querySelectorAll(".toggle-button");
+                var isAnyVisible = Array.from(allContents).some(content => content.style.display !== "none");
+
+                allContents.forEach(content => {
+                    content.style.display = isAnyVisible ? "none" : "block";
+                });
+
+                allButtons.forEach(button => {
+                    if (button.id !== "toggle-all-btn") {
+                        button.innerText = isAnyVisible ? "▶ 展开" : "🔽 收起";
+                    }
+                });
+
+                document.getElementById("toggle-all-btn").innerText = isAnyVisible ? "📌 一键展开" : "📌 一键收起";
+            }
+        </script>
+    </head>
+    <body>
+        <h1>📰 新闻汇总</h1>
+        <button id="toggle-all-btn" onclick="toggleAll()">📌 一键收起</button>
+    """
+
+    jsonl_files = [f for f in os.listdir(DATA_DIR) if f.endswith(".jsonl")]
+
+    # ✅ 把 "新闻汇总.jsonl" 放在最前面
+    summary_file = "新闻汇总.jsonl"
+    if summary_file in jsonl_files:
+        jsonl_files.remove(summary_file)
+        jsonl_files.insert(0, summary_file)
+
+    # ✅ 其余文件按日期倒序排列
+    def extract_date(filename):
+        return os.path.splitext(filename)[0]  # 假设文件名是 YYYY-MM-DD.jsonl
+
+    jsonl_files[1:] = sorted(jsonl_files[1:], key=extract_date, reverse=True)
+
+    for index, file_name in enumerate(jsonl_files):
+        file_path = os.path.join(DATA_DIR, file_name)
+        news_list = read_jsonl(file_path)
+        title = os.path.splitext(file_name)[0]
+
+        # ✅ 按 "publish_time" 倒序排列
+        news_list = sorted(news_list, key=lambda x: x.get("publish_time", ""), reverse=True)
+
+        # ✅ 如果超过 6 条，添加 `[More]` 按钮
+        more_link = f' <a href="/view?file={file_name}" style="font-size:14px;">[More]</a>' if len(news_list) > 6 else ""
+
+        section_id = f"news-{index}"
+        html_response += f"""
+        <div class="news-section">
+            <h2>
+                📅 {title}{more_link}
+                <button id="{section_id}-btn" class="toggle-button" onclick="toggleNews('{section_id}')">🔽 收起</button>
+            </h2>
+            <div id="{section_id}" class="news-content">
+                <ul>
+        """
+
+        # ✅ 只显示前 6 条新闻
+        for i, news in enumerate(news_list[:6]):
+            article_url = f"/article?file={file_name}&index={i}"
+            html_response += f"""
+            <li>
+                <h3><a href="{article_url}" class="news-title">{news.get("title", "无标题")}</a></h3>
+                <p><b>来源：</b>{news.get("publisher", "未知来源")} | <b>发布时间：</b>{news.get("publish_time", "未知时间")}</p>
+                <p>{news.get("content", "无内容")[:200]}...</p>
+            </li>
+            """
+        html_response += "</ul></div></div>"
+
+    html_response += "</body></html>"
+    return Response(html_response, mimetype="text/html")
+
+
+@app.route("/article")
+def view_article(DATA_DIR = "/data"):
+    """ 显示单条新闻的完整内容 """
+    file_name = request.args.get("file")
+    index = request.args.get("index")
+
+    if not file_name or not file_name.endswith(".jsonl") or not index.isdigit():
+        return Response("<h1>无效请求</h1>", mimetype="text/html"), 400
+
+    file_path = os.path.join(DATA_DIR, file_name)
+    if not os.path.exists(file_path):
+        return Response("<h1>文件不存在</h1>", mimetype="text/html"), 404
+
+    news_list = read_jsonl(file_path)
+    index = int(index)
+
+    if index >= len(news_list):
+        return Response("<h1>新闻索引超出范围</h1>", mimetype="text/html"), 404
+
+    news = news_list[index]
+    title = news.get("title", "无标题")
+
+    # ✅ 先处理换行，避免 f-string 语法错误
+    content_text = news.get("content", "无内容").replace("\n", "<br>")
+
+    html_response = f"""
+    <!DOCTYPE html>
+    <html lang="zh">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{title}</title>
+    </head>
+    <body>
+        <h1>{title}</h1>
+        <p><b>来源：</b>{news.get("publisher", "未知来源")} | <b>发布时间：</b>{news.get("publish_time", "未知时间")}</p>
+        <p>{content_text}</p>
+        <a href="/">🔙 返回主页</a>
+    </body>
+    </html>
+    """
+    return Response(html_response, mimetype="text/html")
+
+
+@app.route("/view")
+def view_file(DATA_DIR = "/data"):
+    """ 显示单个 JSONL 文件的所有新闻 """
+    file_name = request.args.get("file")
+    if not file_name or not file_name.endswith(".jsonl"):
+        return Response("<h1>无效文件</h1>", mimetype="text/html"), 400
+
+    file_path = os.path.join(DATA_DIR, file_name)
+    if not os.path.exists(file_path):
+        return Response("<h1>文件不存在</h1>", mimetype="text/html"), 404
+
+    news_list = read_jsonl(file_path)
+    title = os.path.splitext(file_name)[0]
+
+    # ✅ 按 "publish_time" 倒序排列
+    news_list = sorted(news_list, key=lambda x: x.get("publish_time", ""), reverse=True)
+
+    html_response = f"""
+    <!DOCTYPE html>
+    <html lang="zh">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{title} - 全部新闻</title>
+    </head>
+    <body>
+        <h1>📅 {title} - 全部新闻</h1>
+        <a href="/">🔙 返回主页</a>
+        <ul>
+    """
+
+    for news in news_list:
+        html_response += f"""
+        <li>
+            <h3>{news.get("title", "无标题")}</h3>
+            <p><b>来源：</b>{news.get("publisher", "未知来源")} | <b>发布时间：</b>{news.get("publish_time", "未知时间")}</p>
+            <p>{news.get("content", "无内容")}</p>
+        </li>
+        """
+
+    html_response += "</ul></body></html>"
+    return Response(html_response, mimetype="text/html")
+
+
+
+
+@app.route("/<path:data>")
+def get_data(data):
+    """ 读取新闻内容，返回 HTML 并支持 Open Graph """
+    query_date = data.replace("data=", "")
+
+    news_list = read_jsonl()
+    matching_news = [item["content"] for item in news_list if item.get("publish_time") == query_date]
+
+    if matching_news:
+        # ✅ 生成新闻缩略图（带有文本的）
+        image_path = generate_news_image(matching_news[0], query_date)
+
+        content_text = matching_news[0].replace("\n", "<br>")
+        # ✅ 设置 `og:image` 为不同 `date` 对应的图片
+        html_response = f"""
+        <!DOCTYPE html>
+        <html lang="zh">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>新闻汇总 - {query_date}</title>
+            <meta property="og:title" content="新闻汇总 - {query_date}">
+            <meta property="og:description" content="{matching_news[0][:100]}...">
+            <meta property="og:image" content="https://www.multmatrix.com/static/news_images/news_{query_date}.jpeg">
+            <meta property="og:url" content="https://www.multmatrix.com/data={query_date}">
+            <meta name="twitter:card" content="summary_large_image">
+            <meta name="twitter:title" content="新闻汇总 - {query_date}">
+            <meta name="twitter:description" content="{matching_news[0][:100]}...">
+            <meta name="twitter:image" content="https://www.multmatrix.com/static/news_images/news_{query_date}.jpeg">
+        </head>
+        <body>
+            <h1>新闻汇总 - {query_date}</h1>
+            <p>{content_text}</p>
+        </body>
+        </html>
+        """
+        return Response(html_response, mimetype="text/html")
+    else:
+        return Response("<h1>没有这天的新闻汇总</h1>", mimetype="text/html"), 404
+
+# ✅ 让 Flask 允许访问 `/app/news_images/` 目录里的动态图片
+@app.route("/static/news_images/<filename>")
+def serve_news_image(filename):
+    return send_file(os.path.join(IMAGE_DIR, filename), mimetype="image/jpeg")
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000, debug=True)
